@@ -48,6 +48,8 @@ Built with Next.js 16, React 19, TypeScript, and powered by LangChain with OpenR
 
 ### Screenshot Preview
 
+<img width="1366" height="768" alt="image" src="https://github.com/user-attachments/assets/bcab78bc-1e09-4645-bd03-1eabcf1f32c5" />
+
 ---
 
 ## 🚀 Installation
@@ -63,7 +65,7 @@ Before you begin, ensure you have the following installed:
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/ai-portfolio-reviewer.git
+git clone https://github.com/madhiyono/shiny-resume.git
 cd ai-portfolio-reviewer
 ```
 
@@ -247,7 +249,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ```
 MIT License
 
-Copyright (c) 2025 [Your Name]
+Copyright (c) 2025 madhiyono
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -283,8 +285,8 @@ SOFTWARE.
 
 ## 📞 Contact & Support
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/YOUR_USERNAME/ai-portfolio-reviewer/issues)
-- **Discussions**: [Join the conversation](https://github.com/YOUR_USERNAME/ai-portfolio-reviewer/discussions)
+- **GitHub Issues**: [Report bugs or request features](https://github.com/madhiyono/shiny-resume/issues)
+- **Discussions**: [Join the conversation](https://github.com/madhiyono/shiny-resume/discussions)
 
 ---
 
