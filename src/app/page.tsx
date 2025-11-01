@@ -5,13 +5,13 @@ import ResultSection from "@/components/ResultSection";
 import { Badge } from "@/components/ui/badge";
 import { Sparkles } from "lucide-react";
 import { useState } from "react";
-import type { ResumeFormData } from "@/types/prompt.type";
+import type { ResumeReviewResult } from "@/types/schemas/result.schema";
 
 export default function Home() {
   const [showResults, setShowResults] = useState(false);
-  const [resultData, setResultData] = useState<ResumeFormData | null>(null);
+  const [resultData, setResultData] = useState<ResumeReviewResult | null>(null);
 
-  const handleFormSubmit = (data: ResumeFormData) => {
+  const handleFormSubmit = (data: ResumeReviewResult) => {
     // Set the result data and show results
     setResultData(data);
     setShowResults(true);

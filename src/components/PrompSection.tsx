@@ -10,9 +10,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useRef } from "react";
 import { resumeFormSchema } from "@/types/schemas/prompt.schema";
 import type { ResumeFormData } from "@/types/prompt.type";
+import type { ResumeReviewResult } from "@/types/schemas/result.schema";
 
 interface PromptSectionProps {
-  onSubmit: (data: ResumeFormData) => void;
+  onSubmit: (data: ResumeReviewResult) => void;
 }
 
 const PromptSection = ({ onSubmit: onSubmitProp }: PromptSectionProps) => {
@@ -34,15 +35,9 @@ const PromptSection = ({ onSubmit: onSubmitProp }: PromptSectionProps) => {
   const handleFileChange = (file: File | null) => {
     if (!file) return;
 
-    // Validate file type
-    const allowedTypes = [
-      "application/pdf",
-      "application/msword",
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-    ];
-
-    if (!allowedTypes.includes(file.type)) {
-      setError("Only PDF and Word documents (.doc, .docx) are accepted");
+    // Validate file type - Only PDF for now
+    if (file.type !== "application/pdf") {
+      setError("Only PDF files are accepted");
       setSelectedFile(null);
       return;
     }
@@ -80,18 +75,33 @@ const PromptSection = ({ onSubmit: onSubmitProp }: PromptSectionProps) => {
   };
 
   // Form submit handler
-  const handleFormSubmit = (data: ResumeFormData) => {
-    console.log("Form Data:", {
-      resume: {
-        name: data.resume.name,
-        size: data.resume.size,
-        type: data.resume.type,
-      },
-      jobDescription: data.jobDescription || "No job description provided",
-    });
+  const handleFormSubmit = async (data: ResumeFormData) => {
+    try {
+      // Create FormData for file upload
+      const formData = new FormData();
+      formData.append("resume", data.resume);
+      formData.append("jobDescription", data.jobDescription || "");
 
-    // Call parent's onSubmit handler with data
-    onSubmitProp(data);
+      // Call the API
+      const response = await fetch("/api/analyze-resume", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        setError(errorData.error || "Failed to analyze resume");
+        return;
+      }
+
+      const result = await response.json();
+
+      // Call parent's onSubmit handler with the result
+      onSubmitProp(result.data);
+    } catch (err) {
+      console.error("Error submitting form:", err);
+      setError("An unexpected error occurred. Please try again.");
+    }
   };
 
   return (
@@ -140,7 +150,7 @@ const PromptSection = ({ onSubmit: onSubmitProp }: PromptSectionProps) => {
       >
         <input
           type="file"
-          accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+          accept=".pdf,application/pdf"
           className="hidden"
           id="pdf-upload"
           ref={fileInputRef}
@@ -182,13 +192,13 @@ const PromptSection = ({ onSubmit: onSubmitProp }: PromptSectionProps) => {
           ) : (
             <>
               <p className="text-sm sm:text-base font-semibold text-foreground mb-1 sm:mb-2">
-                Click to select PDF or Word file
+                Click to select PDF file
               </p>
               <p className="text-xs sm:text-sm text-muted-foreground">
                 or drag and drop your resume here
               </p>
               <p className="text-xs text-muted-foreground mt-1">
-                Supports: .pdf, .doc, .docx (Max 3MB)
+                Supports: PDF only (Max 3MB)
               </p>
             </>
           )}

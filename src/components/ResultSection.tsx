@@ -19,75 +19,17 @@ import {
   FileCheck,
   ArrowLeft,
 } from "lucide-react";
-import type { ResumeFormData } from "@/types/prompt.type";
+import type { ResumeReviewResult } from "@/types/schemas/result.schema";
 
 interface ResultSectionProps {
-  data: ResumeFormData | null;
+  data: ResumeReviewResult | null;
   onBack: () => void;
 }
 
 const ResultSection = ({ data, onBack }: ResultSectionProps) => {
-  // Mock data - replace with actual data from API
-  const mockData = {
-    overallScore: 90,
-    summary:
-      "Your resume demonstrates strong technical skills and relevant experience. The structure is clear and professional, making it easy for recruiters to identify your key qualifications.",
-    identifiedSkills: {
-      present: [
-        "React",
-        "TypeScript",
-        "Node.js",
-        "AWS",
-        "MongoDB",
-        "Docker",
-        "Git",
-      ],
-      missing: ["Kubernetes", "GraphQL", "CI/CD"],
-    },
-    education: {
-      summary:
-        "Strong educational background with relevant degree in Computer Science. GPA and honors are clearly stated.",
-      score: 95,
-    },
-    experience: [
-      {
-        title: "Senior Frontend Developer",
-        company: "Tech Corp",
-        score: 92,
-        feedback: "Excellent demonstration of leadership and technical skills",
-      },
-      {
-        title: "Full Stack Developer",
-        company: "StartupXYZ",
-        score: 88,
-        feedback: "Good variety of technologies and project experience",
-      },
-    ],
-    strengths: [
-      "Clear and concise job descriptions with quantifiable achievements",
-      "Strong technical skills aligned with industry standards",
-      "Well-organized layout with consistent formatting",
-      "Relevant certifications and continuous learning demonstrated",
-    ],
-    improvements: [
-      "Add more metrics and quantifiable results to achievements",
-      "Include links to portfolio or GitHub projects",
-      "Expand on leadership experience and team collaboration",
-      "Consider adding a brief professional summary at the top",
-    ],
-    recommendations: [
-      "Highlight your experience with cloud technologies more prominently",
-      "Add specific examples of problem-solving in previous roles",
-      "Include any open-source contributions if applicable",
-      "Tailor the skills section to match job requirements more closely",
-    ],
-    fixes: [
-      "Fix typo in second bullet point under current role",
-      "Ensure consistent date formatting throughout the document",
-      "Standardize bullet point structure (all should start with action verbs)",
-    ],
-    jobFit: 85,
-  };
+  if (!data) {
+    return null;
+  }
 
   return (
     <section className="w-full pb-12 sm:pb-16 px-4 sm:px-6">
@@ -108,11 +50,6 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
             <h2 className="font-bold text-3xl sm:text-4xl md:text-5xl">
               Review Results
             </h2>
-            {data && (
-              <p className="text-sm sm:text-base text-muted-foreground mt-2 wrap-break-word px-4">
-                Resume: <span className="font-medium">{data.resume.name}</span>
-              </p>
-            )}
           </div>
 
           {/* Overall Score Card */}
@@ -123,7 +60,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
                   <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-full border-4 sm:border-8 border-cyan-500/20 flex items-center justify-center">
                     <div className="text-center">
                       <p className="text-4xl sm:text-5xl font-bold text-cyan-600">
-                        {mockData.overallScore}
+                        {data.overallScore}
                       </p>
                       <p className="text-sm text-muted-foreground">/100</p>
                     </div>
@@ -161,7 +98,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
           </CardHeader>
           <CardContent>
             <p className="text-sm sm:text-base text-foreground/90 leading-relaxed">
-              {mockData.summary}
+              {data.summary}
             </p>
           </CardContent>
         </Card>
@@ -186,7 +123,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
                 Skills Present
               </h4>
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                {mockData.identifiedSkills.present.map((skill, index) => (
+                {data.identifiedSkills.present.map((skill, index) => (
                   <Badge
                     key={index}
                     variant="default"
@@ -203,7 +140,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
                 Suggested Skills to Add
               </h4>
               <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                {mockData.identifiedSkills.missing.map((skill, index) => (
+                {data.identifiedSkills.missing.map((skill, index) => (
                   <Badge
                     key={index}
                     variant="outline"
@@ -237,11 +174,11 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
                 variant="default"
                 className="bg-indigo-600 hover:bg-indigo-700 text-xs"
               >
-                {mockData.education.score}/100
+                {data.education.score}/100
               </Badge>
             </div>
             <p className="text-sm sm:text-base text-foreground/90">
-              {mockData.education.summary}
+              {data.education.summary}
             </p>
           </CardContent>
         </Card>
@@ -258,7 +195,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            {mockData.experience.map((exp, index) => (
+            {data.experience.map((exp, index) => (
               <div
                 key={index}
                 className="p-3 sm:p-4 rounded-lg border bg-muted/50 space-y-2 overflow-hidden"
@@ -304,7 +241,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 sm:space-y-3">
-                {mockData.strengths.map((strength, index) => (
+                {data.strengths.map((strength, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <CheckCircle2 className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 shrink-0 mt-0.5" />
                     <span className="text-xs sm:text-sm text-foreground/90">
@@ -331,7 +268,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 sm:space-y-3">
-                {mockData.improvements.map((improvement, index) => (
+                {data.improvements.map((improvement, index) => (
                   <li key={index} className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 sm:h-5 sm:w-5 text-yellow-600 shrink-0 mt-0.5" />
                     <span className="text-xs sm:text-sm text-foreground/90">
@@ -359,7 +296,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 sm:space-y-3">
-              {mockData.recommendations.map((recommendation, index) => (
+              {data.recommendations.map((recommendation, index) => (
                 <li
                   key={index}
                   className="flex items-start gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg bg-cyan-500/5 border border-cyan-500/20"
@@ -391,7 +328,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
           </CardHeader>
           <CardContent>
             <ul className="space-y-2 sm:space-y-3">
-              {mockData.fixes.map((fix, index) => (
+              {data.fixes.map((fix, index) => (
                 <li
                   key={index}
                   className="flex items-start gap-2 p-2 sm:p-3 rounded-lg bg-background border"
@@ -429,13 +366,13 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
                     Match Score
                   </span>
                   <span className="text-xl sm:text-2xl font-bold text-purple-600">
-                    {mockData.jobFit}%
+                    {data.jobFit}%
                   </span>
                 </div>
                 <div className="h-3 sm:h-4 bg-muted rounded-full overflow-hidden">
                   <div
                     className="h-full bg-linear-to-r from-purple-600 to-pink-600 transition-all duration-500"
-                    style={{ width: `${mockData.jobFit}%` }}
+                    style={{ width: `${data.jobFit}%` }}
                   />
                 </div>
               </div>
