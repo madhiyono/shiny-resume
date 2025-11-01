@@ -84,3 +84,22 @@ export type ResumeReviewResult = z.infer<typeof resumeReviewResultSchema>;
 export type ExperienceItem = z.infer<typeof experienceItemSchema>;
 export type Education = z.infer<typeof educationSchema>;
 export type IdentifiedSkills = z.infer<typeof identifiedSkillsSchema>;
+
+// Utility functions for dynamic labels
+export function getResumeQualityLabel(score: number): string {
+  if (score >= 90) return "Excellent Resume";
+  if (score >= 80) return "Great Resume";
+  if (score >= 70) return "Good Resume";
+  if (score >= 60) return "Average Resume";
+  if (score >= 50) return "Fair Resume";
+  return "Needs Improvement";
+}
+
+export function getJobFitLabel(percentage: number): string {
+  if (percentage >= 85) return "Excellent Match";
+  if (percentage >= 70) return "Strong Match";
+  if (percentage >= 55) return "Good Match";
+  if (percentage >= 40) return "Moderate Match";
+  if (percentage >= 25) return "Weak Match";
+  return "Poor Match";
+}

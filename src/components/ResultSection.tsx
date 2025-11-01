@@ -20,6 +20,10 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import type { ResumeReviewResult } from "@/types/schemas/result.schema";
+import {
+  getResumeQualityLabel,
+  getJobFitLabel,
+} from "@/types/schemas/result.schema";
 
 interface ResultSectionProps {
   data: ResumeReviewResult | null;
@@ -75,7 +79,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
                     variant="default"
                     className="bg-cyan-600 hover:bg-cyan-700 text-xs sm:text-sm"
                   >
-                    Excellent Resume
+                    {getResumeQualityLabel(data.overallScore)}
                   </Badge>
                 </div>
               </div>
@@ -380,7 +384,7 @@ const ResultSection = ({ data, onBack }: ResultSectionProps) => {
                 variant="default"
                 className="bg-purple-600 hover:bg-purple-700 text-sm sm:text-base px-3 sm:px-4 py-1.5 sm:py-2 whitespace-nowrap"
               >
-                Strong Match
+                {getJobFitLabel(data.jobFit)}
               </Badge>
             </div>
           </CardContent>
