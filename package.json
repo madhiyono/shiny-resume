@@ -1,7 +1,29 @@
 {
-  "name": "ai-portfolio-reviewer",
+  "name": "shiny-resume",
   "version": "0.1.0",
-  "private": true,
+  "description": "AI-powered resume reviewer that provides instant, comprehensive feedback on resumes",
+  "author": "madhiyono",
+  "license": "MIT",
+  "keywords": [
+    "resume",
+    "ai",
+    "langchain",
+    "nextjs",
+    "typescript",
+    "openrouter",
+    "career",
+    "job-search",
+    "resume-reviewer"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madhiyono/shiny-resume.git"
+  },
+  "bugs": {
+    "url": "https://github.com/madhiyono/shiny-resume/issues"
+  },
+  "homepage": "https://github.com/madhiyono/shiny-resume#readme",
+  "private": false,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
