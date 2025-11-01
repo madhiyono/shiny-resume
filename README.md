@@ -66,7 +66,7 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 git clone https://github.com/madhiyono/shiny-resume.git
-cd ai-portfolio-reviewer
+cd shiny-resume
 ```
 
 ### Step 2: Install Dependencies
